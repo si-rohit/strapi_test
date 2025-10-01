@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Event"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "location": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "datetime"
+    },
+    "highlight": {
+      "type": "component",
+      "component": "shared.highlights",
+      "repeatable": false
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "event"
+    },
+    "tickets": {
+      "type": "component",
+      "component": "shared.tickets",
+      "repeatable": true
+    }
+  }
+}
