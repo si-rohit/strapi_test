@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_ticket_infos",
+  "info": {
+    "displayName": "ticket_info"
+  },
+  "options": {},
+  "attributes": {
+    "quantity": {
+      "type": "biginteger"
+    },
+    "price": {
+      "type": "biginteger"
+    },
+    "saleStart": {
+      "type": "datetime"
+    },
+    "saleEnd": {
+      "type": "datetime"
+    }
+  },
+  "config": {}
+}

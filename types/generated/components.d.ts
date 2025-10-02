@@ -74,6 +74,19 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedTicketInfo extends Struct.ComponentSchema {
+  collectionName: 'components_shared_ticket_infos';
+  info: {
+    displayName: 'ticket_info';
+  };
+  attributes: {
+    price: Schema.Attribute.BigInteger;
+    quantity: Schema.Attribute.BigInteger;
+    saleEnd: Schema.Attribute.DateTime;
+    saleStart: Schema.Attribute.DateTime;
+  };
+}
+
 export interface SharedTickets extends Struct.ComponentSchema {
   collectionName: 'components_shared_tickets';
   info: {
@@ -96,6 +109,7 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'shared.ticket-info': SharedTicketInfo;
       'shared.tickets': SharedTickets;
     }
   }

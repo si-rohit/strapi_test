@@ -19,17 +19,6 @@
       "type": "text",
       "required": true
     },
-    "thumbnail": {
-      "type": "media",
-      "multiple": true,
-      "required": true,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "location": {
       "type": "string",
       "required": true
@@ -48,10 +37,19 @@
       "target": "plugin::users-permissions.user",
       "mappedBy": "event"
     },
-    "tickets": {
+    "thumbnail": {
+      "type": "text"
+    },
+    "ticket_info": {
       "type": "component",
-      "component": "shared.tickets",
-      "repeatable": true
+      "component": "shared.ticket-info",
+      "repeatable": false
+    },
+    "tickets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ticket.ticket",
+      "mappedBy": "event"
     }
   }
 }
