@@ -1,4 +1,4 @@
-export default async function isOwner(ctx, next) {
+module.exports = async (ctx, next) => {
   const { id } = ctx.params; // Event ID from URL
   const user = ctx.state.user; // logged-in user
 
@@ -18,4 +18,4 @@ export default async function isOwner(ctx, next) {
   }
 
   return await next();
-}
+};
