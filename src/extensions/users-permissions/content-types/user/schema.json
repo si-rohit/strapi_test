@@ -77,6 +77,28 @@
       "relation": "oneToMany",
       "target": "api::ticket.ticket",
       "mappedBy": "user"
+    },
+    "otpCode": {
+      "type": "string"
+    },
+    "otpExpiresAt": {
+      "type": "datetime"
+    },
+    "lastOtpSentAt": {
+      "type": "datetime"
+    },
+    "resendCount": {
+      "type": "integer",
+      "default": 0
+    },
+    "firstResendAt": {
+      "type": "datetime"
+    },
+    "profilePic": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "text"
     }
   }
 }

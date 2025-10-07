@@ -50,6 +50,12 @@
       "relation": "oneToMany",
       "target": "api::ticket.ticket",
       "mappedBy": "event"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "mappedBy": "events"
     }
   }
 }

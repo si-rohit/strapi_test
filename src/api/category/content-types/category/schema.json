@@ -12,20 +12,19 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string"
-    },
-    "slug": {
-      "type": "uid"
-    },
-    "articles": {
+    "events": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::article.article",
-      "mappedBy": "category"
+      "relation": "manyToMany",
+      "target": "api::event.event",
+      "inversedBy": "categories"
     },
-    "description": {
-      "type": "text"
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "string",
+      "required": true
     }
   }
 }
