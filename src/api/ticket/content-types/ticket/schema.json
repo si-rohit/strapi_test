@@ -27,23 +27,20 @@
       "type": "biginteger",
       "default": "1"
     },
-    "paymentMethod": {
-      "type": "enumeration",
-      "enum": [
-        "stripe",
-        "razorpay"
-      ]
-    },
-    "paymentStatus": {
-      "type": "enumeration",
-      "enum": [
-        "pending",
-        "success",
-        "failed"
-      ]
-    },
     "paymentId": {
       "type": "text"
+    },
+    "ticket_type": {
+      "type": "string"
+    },
+    "gen_price": {
+      "type": "biginteger"
+    },
+    "vip_price": {
+      "type": "biginteger"
+    },
+    "std_price": {
+      "type": "biginteger"
     }
   }
 }

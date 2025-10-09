@@ -545,7 +545,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    events: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
+    events: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
     image: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -572,25 +572,35 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    categories: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::category.category'
-    >;
+    ageLimit: Schema.Attribute.String;
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.DateTime;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
-    highlight: Schema.Attribute.Component<'shared.highlights', false>;
+    doorTime: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
     location: Schema.Attribute.String & Schema.Attribute.Required;
+    parking: Schema.Attribute.String;
+    price: Schema.Attribute.BigInteger;
     publishedAt: Schema.Attribute.DateTime;
-    thumbnail: Schema.Attribute.Text;
-    ticket_info: Schema.Attribute.Component<'shared.ticket-info', false>;
+    quantity: Schema.Attribute.BigInteger;
+    saleEnd: Schema.Attribute.String;
+    saleStart: Schema.Attribute.String;
+    speakers: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    thumbnail: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::thumbnail.thumbnail'
+    >;
     tickets: Schema.Attribute.Relation<'oneToMany', 'api::ticket.ticket'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    type: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Online'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -633,6 +643,35 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiThumbnailThumbnail extends Struct.CollectionTypeSchema {
+  collectionName: 'thumbnails';
+  info: {
+    displayName: 'thumbnail';
+    pluralName: 'thumbnails';
+    singularName: 'thumbnail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    event: Schema.Attribute.Relation<'manyToOne', 'api::event.event'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::thumbnail.thumbnail'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
   collectionName: 'tickets';
   info: {
@@ -648,6 +687,7 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     event: Schema.Attribute.Relation<'manyToOne', 'api::event.event'>;
+    gen_price: Schema.Attribute.BigInteger;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -655,12 +695,10 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     paymentId: Schema.Attribute.Text;
-    paymentMethod: Schema.Attribute.Enumeration<['stripe', 'razorpay']>;
-    paymentStatus: Schema.Attribute.Enumeration<
-      ['pending', 'success', 'failed']
-    >;
     publishedAt: Schema.Attribute.DateTime;
     quantity: Schema.Attribute.BigInteger & Schema.Attribute.DefaultTo<'1'>;
+    std_price: Schema.Attribute.BigInteger;
+    ticket_type: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -668,6 +706,7 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    vip_price: Schema.Attribute.BigInteger;
   };
 }
 
@@ -1141,6 +1180,7 @@ export interface PluginUsersPermissionsUser
         minLength: 6;
       }>;
     event: Schema.Attribute.Relation<'oneToOne', 'api::event.event'>;
+    events: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
     firstResendAt: Schema.Attribute.DateTime;
     lastOtpSentAt: Schema.Attribute.DateTime;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1195,6 +1235,7 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::event.event': ApiEventEvent;
       'api::global.global': ApiGlobalGlobal;
+      'api::thumbnail.thumbnail': ApiThumbnailThumbnail;
       'api::ticket.ticket': ApiTicketTicket;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

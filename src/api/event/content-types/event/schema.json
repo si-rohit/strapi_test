@@ -26,24 +26,11 @@
     "date": {
       "type": "datetime"
     },
-    "highlight": {
-      "type": "component",
-      "component": "shared.highlights",
-      "repeatable": false
-    },
     "user": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
       "mappedBy": "event"
-    },
-    "thumbnail": {
-      "type": "text"
-    },
-    "ticket_info": {
-      "type": "component",
-      "component": "shared.ticket-info",
-      "repeatable": false
     },
     "tickets": {
       "type": "relation",
@@ -51,11 +38,48 @@
       "target": "api::ticket.ticket",
       "mappedBy": "event"
     },
-    "categories": {
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "events"
+    },
+    "speakers": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::category.category",
+      "target": "plugin::users-permissions.user",
       "mappedBy": "events"
+    },
+    "type": {
+      "type": "string",
+      "default": "Online"
+    },
+    "ageLimit": {
+      "type": "string"
+    },
+    "parking": {
+      "type": "string"
+    },
+    "doorTime": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "biginteger"
+    },
+    "price": {
+      "type": "biginteger"
+    },
+    "thumbnail": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::thumbnail.thumbnail",
+      "mappedBy": "event"
+    },
+    "saleStart": {
+      "type": "string"
+    },
+    "saleEnd": {
+      "type": "string"
     }
   }
 }

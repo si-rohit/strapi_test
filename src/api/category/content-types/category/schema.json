@@ -14,9 +14,9 @@
   "attributes": {
     "events": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::event.event",
-      "inversedBy": "categories"
+      "mappedBy": "category"
     },
     "name": {
       "type": "string",

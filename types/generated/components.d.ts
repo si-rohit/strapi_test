@@ -74,6 +74,14 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedThumbnail extends Struct.ComponentSchema {
+  collectionName: 'components_shared_thumbnails';
+  info: {
+    displayName: 'thumbnail';
+  };
+  attributes: {};
+}
+
 export interface SharedTicketInfo extends Struct.ComponentSchema {
   collectionName: 'components_shared_ticket_infos';
   info: {
@@ -109,6 +117,7 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'shared.thumbnail': SharedThumbnail;
       'shared.ticket-info': SharedTicketInfo;
       'shared.tickets': SharedTickets;
     }

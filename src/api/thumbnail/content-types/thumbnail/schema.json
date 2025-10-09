@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "thumbnails",
+  "info": {
+    "singularName": "thumbnail",
+    "pluralName": "thumbnails",
+    "displayName": "thumbnail"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "event": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::event.event",
+      "inversedBy": "thumbnail"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
