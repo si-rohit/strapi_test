@@ -80,6 +80,18 @@
     },
     "saleEnd": {
       "type": "string"
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "event"
+    },
+    "user_tickets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-ticket.user-ticket",
+      "mappedBy": "event"
     }
   }
 }

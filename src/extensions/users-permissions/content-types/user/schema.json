@@ -72,12 +72,6 @@
       "target": "api::event.event",
       "inversedBy": "user"
     },
-    "tickets": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::ticket.ticket",
-      "mappedBy": "user"
-    },
     "otpCode": {
       "type": "string"
     },
@@ -105,6 +99,18 @@
       "relation": "manyToMany",
       "target": "api::event.event",
       "inversedBy": "speakers"
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "user"
+    },
+    "user_tickets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-ticket.user-ticket",
+      "mappedBy": "user"
     }
   }
 }

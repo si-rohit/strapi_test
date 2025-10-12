@@ -44,5 +44,15 @@ module.exports = {
         // auth: {} hata do → sab dekh sakte hain
       },
     },
+    {
+      method: 'GET',
+      path: '/events/user/:id',
+      handler: 'event.getEventByUser',
+      config: {
+        auth: false, // disable JWT check completely
+        policies: [], // no extra restrictions
+        middlewares: [], // no middleware validation
+      },
+    },
   ],
 };

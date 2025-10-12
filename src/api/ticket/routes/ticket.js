@@ -1,9 +1,16 @@
 'use strict';
 
-/**
- * ticket router
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::ticket.ticket');
+module.exports = {
+  routes: [
+    {
+      method: 'POST',
+      path: '/tickets/:eventId',
+      handler: 'ticket.findEventTicketsByUser',
+      config: {
+        auth: false, // disable JWT check completely
+        policies: [], // no extra restrictions
+        middlewares: [], // no middleware validation
+      },
+    },
+  ],
+};

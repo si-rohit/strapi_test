@@ -584,6 +584,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
     location: Schema.Attribute.String & Schema.Attribute.Required;
+    orders: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
     parking: Schema.Attribute.String;
     price: Schema.Attribute.BigInteger;
     publishedAt: Schema.Attribute.DateTime;
@@ -607,6 +608,10 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     user: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
+    >;
+    user_tickets: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-ticket.user-ticket'
     >;
   };
 }
@@ -640,6 +645,75 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiOrderItemOrderItem extends Struct.CollectionTypeSchema {
+  collectionName: 'order_items';
+  info: {
+    displayName: 'OrderItem';
+    pluralName: 'order-items';
+    singularName: 'order-item';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::order-item.order-item'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Relation<'manyToOne', 'api::order.order'>;
+    price: Schema.Attribute.BigInteger;
+    publishedAt: Schema.Attribute.DateTime;
+    quantity: Schema.Attribute.BigInteger;
+    subtotal: Schema.Attribute.BigInteger;
+    ticket: Schema.Attribute.Relation<'manyToOne', 'api::ticket.ticket'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
+  collectionName: 'orders';
+  info: {
+    displayName: 'Order';
+    pluralName: 'orders';
+    singularName: 'order';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    event: Schema.Attribute.Relation<'manyToOne', 'api::event.event'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'> &
+      Schema.Attribute.Private;
+    order_items: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::order-item.order-item'
+    >;
+    orderID: Schema.Attribute.UID;
+    paymentID: Schema.Attribute.String;
+    payStatus: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    totalAmount: Schema.Attribute.BigInteger;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -686,19 +760,59 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
     event: Schema.Attribute.Relation<'manyToOne', 'api::event.event'>;
-    gen_price: Schema.Attribute.BigInteger;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::ticket.ticket'
     > &
       Schema.Attribute.Private;
-    paymentId: Schema.Attribute.Text;
+    name: Schema.Attribute.String;
+    order_items: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::order-item.order-item'
+    >;
+    price: Schema.Attribute.BigInteger;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.BigInteger & Schema.Attribute.DefaultTo<'1'>;
-    std_price: Schema.Attribute.BigInteger;
-    ticket_type: Schema.Attribute.String;
+    soldQuantity: Schema.Attribute.BigInteger;
+    totalQuantity: Schema.Attribute.BigInteger;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_tickets: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-ticket.user-ticket'
+    >;
+  };
+}
+
+export interface ApiUserTicketUserTicket extends Struct.CollectionTypeSchema {
+  collectionName: 'user_tickets';
+  info: {
+    displayName: 'user-ticket';
+    pluralName: 'user-tickets';
+    singularName: 'user-ticket';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    event: Schema.Attribute.Relation<'manyToOne', 'api::event.event'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-ticket.user-ticket'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    qr: Schema.Attribute.Text;
+    ticket: Schema.Attribute.Relation<'manyToOne', 'api::ticket.ticket'>;
+    ticket_status: Schema.Attribute.String;
+    uniqueId: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -706,7 +820,6 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-    vip_price: Schema.Attribute.BigInteger;
   };
 }
 
@@ -1189,6 +1302,7 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    orders: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
     otpCode: Schema.Attribute.String;
     otpExpiresAt: Schema.Attribute.DateTime;
     password: Schema.Attribute.Password &
@@ -1205,10 +1319,13 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    tickets: Schema.Attribute.Relation<'oneToMany', 'api::ticket.ticket'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_tickets: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-ticket.user-ticket'
+    >;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
@@ -1235,8 +1352,11 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::event.event': ApiEventEvent;
       'api::global.global': ApiGlobalGlobal;
+      'api::order-item.order-item': ApiOrderItemOrderItem;
+      'api::order.order': ApiOrderOrder;
       'api::thumbnail.thumbnail': ApiThumbnailThumbnail;
       'api::ticket.ticket': ApiTicketTicket;
+      'api::user-ticket.user-ticket': ApiUserTicketUserTicket;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

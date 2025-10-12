@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_tickets",
+  "info": {
+    "singularName": "user-ticket",
+    "pluralName": "user-tickets",
+    "displayName": "user-ticket"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uniqueId": {
+      "type": "string"
+    },
+    "qr": {
+      "type": "text"
+    },
+    "ticket_status": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_tickets"
+    },
+    "event": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::event.event",
+      "inversedBy": "user_tickets"
+    },
+    "ticket": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ticket.ticket",
+      "inversedBy": "user_tickets"
+    }
+  }
+}

@@ -11,36 +11,38 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "user": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "tickets"
-    },
     "event": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::event.event",
       "inversedBy": "tickets"
     },
-    "quantity": {
-      "type": "biginteger",
-      "default": "1"
-    },
-    "paymentId": {
-      "type": "text"
-    },
-    "ticket_type": {
+    "name": {
       "type": "string"
     },
-    "gen_price": {
+    "description": {
+      "type": "text"
+    },
+    "price": {
       "type": "biginteger"
     },
-    "vip_price": {
+    "totalQuantity": {
       "type": "biginteger"
     },
-    "std_price": {
+    "soldQuantity": {
       "type": "biginteger"
+    },
+    "order_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-item.order-item",
+      "mappedBy": "ticket"
+    },
+    "user_tickets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-ticket.user-ticket",
+      "mappedBy": "ticket"
     }
   }
 }
